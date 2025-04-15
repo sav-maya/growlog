@@ -4,19 +4,11 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, Leaf, Calendar, Bell, Database, User, PlusCircle, Menu, X, Search } from "lucide-react"
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const pathname = usePathname()
@@ -37,11 +29,11 @@ export function Navbar() {
   return (
     <>
       {/* Desktop Navigation */}
-      <div className="hidden md:flex h-16 items-center fixed top-0 left-0 right-0 z-30 bg-white border-b px-4 lg:px-6">
+      <div className="hidden md:flex h-16 items-center fixed top-0 left-0 right-0 z-30 bg-white border-b dark:bg-gray-900 dark:border-gray-800 px-4 lg:px-6">
         <div className="flex items-center flex-1 max-w-7xl mx-auto">
           <Link href="/" className="flex items-center mr-6">
             <Leaf className="h-6 w-6 text-green-600 mr-2" />
-            <span className="text-xl font-bold text-green-800">GrowLog</span>
+            <span className="text-xl font-bold text-green-800 dark:text-green-300">GrowLog</span>
           </Link>
 
           <nav className="flex items-center space-x-1">
@@ -51,7 +43,7 @@ export function Navbar() {
                 href={item.path}
                 className={cn(
                   "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                  isActive(item.path) ? "bg-green-50 text-green-700" : "text-gray-700 hover:bg-gray-100",
+                  isActive(item.path) ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300" : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
                 )}
               >
                 <item.icon className="h-4 w-4 mr-2" />
@@ -66,59 +58,60 @@ export function Navbar() {
               <Input type="search" placeholder="Search plants..." className="pl-8" />
             </div>
 
-            <Button asChild variant="default" className="bg-green-600 hover:bg-green-700">
-              <Link href="/add-plant">
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add Plant
-              </Link>
-            </Button>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Profile" />
-                    <AvatarFallback>AJ</AvatarFallback>
-                  </Avatar>
+            <SignedIn>
+              <Button asChild variant="default" className="bg-green-600 hover:bg-green-700">
+                <Link href="/add-plant">
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Add Plant
+                </Link>
+              </Button>
+              
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+            
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button variant="outline" size="sm">
+                  Sign In
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/profile">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Bell className="mr-2 h-4 w-4" />
-                  <span>Notifications</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </SignInButton>
+              
+              <SignUpButton mode="modal">
+                <Button variant="default" size="sm" className="bg-green-600 hover:bg-green-700">
+                  Sign Up
+                </Button>
+              </SignUpButton>
+            </SignedOut>
           </div>
         </div>
       </div>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden flex h-16 items-center fixed top-0 left-0 right-0 z-30 bg-white border-b px-4">
+      <div className="md:hidden flex h-16 items-center fixed top-0 left-0 right-0 z-30 bg-white border-b dark:bg-gray-900 dark:border-gray-800 px-4">
         <div className="flex items-center justify-between w-full">
           <Link href="/" className="flex items-center">
             <Leaf className="h-6 w-6 text-green-600 mr-2" />
-            <span className="text-xl font-bold text-green-800">GrowLog</span>
+            <span className="text-xl font-bold text-green-800 dark:text-green-300">GrowLog</span>
           </Link>
 
           <div className="flex items-center space-x-2">
-            <Button asChild variant="default" size="sm" className="bg-green-600 hover:bg-green-700">
-              <Link href="/add-plant">
-                <PlusCircle className="h-4 w-4" />
-              </Link>
-            </Button>
+            <SignedIn>
+              <Button asChild variant="default" size="sm" className="bg-green-600 hover:bg-green-700">
+                <Link href="/add-plant">
+                  <PlusCircle className="h-4 w-4" />
+                </Link>
+              </Button>
+              
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+            
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button variant="outline" size="icon">
+                  <User className="h-4 w-4" />
+                </Button>
+              </SignInButton>
+            </SignedOut>
 
             <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -129,7 +122,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-20 bg-white pt-16 pb-20">
+        <div className="md:hidden fixed inset-0 z-20 bg-white dark:bg-gray-900 pt-16 pb-20">
           <div className="px-4 py-6 space-y-6">
             <div className="relative mb-6">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -143,7 +136,7 @@ export function Navbar() {
                   href={item.path}
                   className={cn(
                     "flex items-center px-3 py-3 text-base font-medium rounded-md transition-colors",
-                    isActive(item.path) ? "bg-green-50 text-green-700" : "text-gray-700 hover:bg-gray-100",
+                    isActive(item.path) ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300" : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
                   )}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -152,14 +145,13 @@ export function Navbar() {
                 </Link>
               ))}
 
-              <Link
-                href="/profile"
-                className="flex items-center px-3 py-3 text-base font-medium rounded-md transition-colors text-gray-700 hover:bg-gray-100"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <User className="h-5 w-5 mr-3" />
-                Profile
-              </Link>
+              <SignedOut>
+                <SignUpButton mode="modal">
+                  <Button variant="default" className="w-full mt-4 bg-green-600 hover:bg-green-700">
+                    Sign Up
+                  </Button>
+                </SignUpButton>
+              </SignedOut>
             </nav>
           </div>
         </div>
