@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { Navbar } from "@/components/navbar"
@@ -19,16 +20,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <Navbar />
-          <main className="min-h-screen pt-4">{children}</main>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <body className={inter.className}>
+            <Navbar />
+            <main className="min-h-screen pt-4">{children}</main>
+          </body>
         </ThemeProvider>
-      </body>
-    </html>
+      </html>
+    </ClerkProvider>
   )
 }
 
-
-import './globals.css'

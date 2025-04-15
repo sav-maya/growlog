@@ -1,7 +1,7 @@
-import Image from "next/image"
 import Link from "next/link"
-import { Leaf, Calendar, Bell, CheckCircle2 } from "lucide-react"
-import { SignInButton, SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs"
+import Image from "next/image"
+import { Leaf, Droplets, Calendar, Bell, CheckCircle2 } from "lucide-react"
+import { SignInButton, SignUpButton } from "@clerk/nextjs"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -24,23 +24,16 @@ export default function LandingPage() {
                 GrowLog helps you monitor your garden's progress, set reminders, and celebrate each milestone from seed to harvest.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start pt-4">
-                <SignedOut>
-                  <SignUpButton mode="modal">
-                    <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
-                      Get Started Free
-                    </Button>
-                  </SignUpButton>
-                  <SignInButton mode="modal">
-                    <Button size="lg" variant="outline">
-                      Sign In
-                    </Button>
-                  </SignInButton>
-                </SignedOut>
-                <SignedIn>
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white" asChild>
-                    <Link href="/dashboard">Go to Dashboard</Link>
+                <SignUpButton mode="modal">
+                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
+                    Get Started Free
                   </Button>
-                </SignedIn>
+                </SignUpButton>
+                <SignInButton mode="modal">
+                  <Button size="lg" variant="outline">
+                    Sign In
+                  </Button>
+                </SignInButton>
               </div>
             </div>
             <div className="flex-1 w-full max-w-[500px] mx-auto">
@@ -109,6 +102,57 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Testimonials/Benefits Section */}
+      <section className="py-16 md:py-24 bg-green-50 dark:bg-green-950/20">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-green-800 dark:text-green-300 mb-4">Why gardeners love GrowLog</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="flex items-start gap-4">
+              <div className="mt-1 bg-green-100 dark:bg-green-900/30 rounded-full p-1">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">Track growth progress</h3>
+                <p className="text-gray-600 dark:text-gray-300">Document each plant's journey with photos and notes.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="mt-1 bg-green-100 dark:bg-green-900/30 rounded-full p-1">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">Smart watering reminders</h3>
+                <p className="text-gray-600 dark:text-gray-300">Get notified when it's time to water based on each plant's needs.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="mt-1 bg-green-100 dark:bg-green-900/30 rounded-full p-1">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">Weather integration</h3>
+                <p className="text-gray-600 dark:text-gray-300">Local weather forecasts to help plan your gardening activities.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="mt-1 bg-green-100 dark:bg-green-900/30 rounded-full p-1">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">Plant database</h3>
+                <p className="text-gray-600 dark:text-gray-300">Access care instructions for hundreds of plants.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 md:py-24">
         <div className="container px-4 md:px-6 mx-auto">
@@ -118,23 +162,16 @@ export default function LandingPage() {
               Join thousands of gardeners who use GrowLog to nurture their plants and gardens.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <SignedOut>
-                <SignUpButton mode="modal">
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
-                    Create Free Account
-                  </Button>
-                </SignUpButton>
-                <SignInButton mode="modal">
-                  <Button size="lg" variant="outline">
-                    Sign In
-                  </Button>
-                </SignInButton>
-              </SignedOut>
-              <SignedIn>
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white" asChild>
-                  <Link href="/dashboard">Go to Dashboard</Link>
+              <SignUpButton mode="modal">
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
+                  Create Free Account
                 </Button>
-              </SignedIn>
+              </SignUpButton>
+              <SignInButton mode="modal">
+                <Button size="lg" variant="outline">
+                  Sign In
+                </Button>
+              </SignInButton>
             </div>
           </div>
         </div>
@@ -156,4 +193,4 @@ export default function LandingPage() {
       </footer>
     </div>
   )
-}
+} 
